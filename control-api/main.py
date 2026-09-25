@@ -62,7 +62,7 @@ def stop_mqtt_stream_client():
     stream_client.loop_stop()
     stream_client.disconnect()
 
-origins = ["http://localhost:8000","http://0.0.0.0:80000"]
+origins = ["http://localhost:8000","http://0.0.0.0:8000"]
 
 # CLIENT_ID = os.getenv('25133f28f9e842998a662eb4b935cf2a')
 # TENANT_ID = os.getenv('8b060fcf-29fd-4b25-a613-c4712345cfd9')
