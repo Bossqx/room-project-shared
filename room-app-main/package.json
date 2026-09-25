@@ -1,0 +1,32 @@
+{
+  "name": "qr-display-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview --host"
+  },
+  "dependencies": {
+    "@fullcalendar/core": "^6.1.21",
+    "@fullcalendar/daygrid": "^6.1.21",
+    "@fullcalendar/interaction": "^6.1.21",
+    "@fullcalendar/list": "^6.1.21",
+    "@fullcalendar/timegrid": "^6.1.21",
+    "@fullcalendar/vue3": "^6.1.21",
+    "mqtt": "^5.5.0",
+    "pinia": "^3.0.4",
+    "qrcode": "^1.5.3",
+    "vue": "^3.4.21",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.5",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "typescript": "^5.4.0",
+    "vite": "^8.1.5",
+    "vite-plugin-pwa": "^1.3.0",
+    "vue-tsc": "^2.0.6"
+  }
+}

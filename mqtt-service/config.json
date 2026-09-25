@@ -1,0 +1,11 @@
+{
+  "broker": "192.168.1.177",
+  "port": 1883,
+  "room": "25.03.05",
+  "device": "light",
+  "qos": 1,
+  "pin_device": [{
+    "device_no":"D1",
+    "pin_no":13
+  }]
+}

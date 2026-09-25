@@ -1,0 +1,19 @@
+[Unit]
+Description=Device Listener MQTT Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/opt/device_listener
+ExecStart=/usr/bin/python3 /opt/mqtt_sub/device_listener.py
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=device_listener
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,19 @@
+{
+  "mqtt": {
+    "host": "192.168.1.176",
+    "port": 9001,
+    "protocol": "ws",
+    "username": "",
+    "password": "",
+    "reconnectPeriod": 3000,
+    "connectTimeout": 10000
+  },
+  "topics": [
+    "device/+/command",
+    "send_message/qr",
+    "update_schedule"
+  ],
+  "bookingUrl": "http://localhost:5173/room-manager/",
+  "prefixUrl": "http://localhost:5173/room-manager/confirm/",
+  "apiRoute":"http://localhost:8000/"
+}

@@ -1,0 +1,26 @@
+{
+  "mqtt": {
+    
+    "host_0": "192.168.1.174",
+    "host_1":" 192.168.1.43",
+    "host": "10.27.127.25",
+    "port": 9001,
+    "protocol": "ws",
+    "path": "",
+    "username": "",
+    "password": "",
+    "reconnectPeriod": 3000,
+    "connectTimeout": 10000
+  },
+  "topics": [
+    "device/+/command",
+    "send_message/qr",
+    "update_schedule",
+    "mq_update_schedule",
+    "staff_access/#"
+  ],
+  "bookingUrl": "http://localhost:5173/room-manager/",
+  "staffAccessUrl": "http://localhost:5173/room-manager/staff-access/",
+  "prefixUrl": "http://localhost:5173/room-manager/confirm/",
+  "apiRoute":"http://localhost:8000/"
+}

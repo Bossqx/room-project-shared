@@ -1,0 +1,15 @@
+[Unit]
+Description=CoSAI booking schedule service
+After=network-online.target control-api.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/schedule-service
+ExecStart=/opt/schedule-service/sendenv/bin/python /opt/schedule-service/schedule_service.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

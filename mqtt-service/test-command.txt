@@ -1,0 +1,13 @@
+# Light
+mosquitto_pub -h 192.168.1.176 -t "device/room1/light" -m '{"command":"light_on"}'
+mosquitto_pub -h 192.168.1.176 -t "device/room1/light" -m '{"command":"light_off"}'
+
+# Door (auto-relock after 5s)
+mosquitto_pub -h 192.168.1.176 -t "device/room1/door" -m '{"command":"door_unlock"}'
+
+# Door (hold open)
+mosquitto_pub -h 192.168.1.176 -t "device/room1/door" -m '{"command":"door_unlock_hold"}'
+mosquitto_pub -h 192.168.1.176 -t "device/room1/door" -m '{"command":"door_lock"}'
+
+# Check state
+mosquitto_sub -h 192.168.1.176 -t "device/room1/status" -C 1

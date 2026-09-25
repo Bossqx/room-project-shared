@@ -1,0 +1,52 @@
+[
+  {
+    "roomcode": "27.03.05",
+    "weekday": "3",
+    "timeperiodfrom": "2",
+    "timeperiodto": "5",
+    "coursecode": "601301",
+    "coursename": "ชีวสถิติ",
+    "revisioncode": "66",
+    "periodfrom": "1",
+    "periodto": "16",
+    "teacher": [
+      {
+        "officerid": "22701",
+        "officerlogin": "anusorn.p",
+        "prefixname": "ดร.",
+        "officername": "อนุสรณ์",
+        "officersurname": "เป๋าสูงเนิน"
+      }
+    ],
+    "startTime": "08:40",
+    "finishTime": "12:00",
+    "id": "NjAxMzAxXzI3LjAzLjA1XzNfMDg6NDBfMTI6MDBfMjU2OF8yXzIwMjYtMDYtMjdfYW51c29ybi5w",
+    "uuid": "abb7b842-6074-50f9-8fc3-0523ef216e55",
+    "isExist": true
+  },
+  {
+    "roomcode": "27.03.05",
+    "weekday": "3",
+    "timeperiodfrom": "7",
+    "timeperiodto": "10",
+    "coursecode": "306201",
+    "coursename": "ธุรกิจดิจิทัล",
+    "revisioncode": "65",
+    "periodfrom": "1",
+    "periodto": "16",
+    "teacher": [
+      {
+        "officerid": "550",
+        "officerlogin": "akekachai.p",
+        "prefixname": "นาย",
+        "officername": "เอกชัย",
+        "officersurname": "ปานมาก"
+      }
+    ],
+    "startTime": "12:50",
+    "finishTime": "16:10",
+    "id": "MzA2MjAxXzI3LjAzLjA1XzNfMTI6NTBfMTY6MTBfMjU2OF8yXzIwMjYtMDYtMjdfYWtla2FjaGFpLnA=",
+    "uuid": "279b77a5-835a-5436-a9fd-b342a054c21b",
+    "isExist": false
+  }
+]

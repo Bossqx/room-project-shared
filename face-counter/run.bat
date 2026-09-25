@@ -1,0 +1,1 @@
+python person-counter.py --webcam --camera-index 1 --model yolov8s.pt

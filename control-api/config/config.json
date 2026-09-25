@@ -1,0 +1,9 @@
+{   
+    "mysql_config":{"host":"localhost","port":3306,"user":"root" ,"password":"","database":"db_roomcontrol"},
+    "api_route":"http://ocalhost:8000/",
+    "broker_ip_V7":"192.168.1.43",
+    "broker_ip_v2":"10.27.127",
+    "broker_ip":"10.27.127.25",
+    "broker_ip_v5": "172.30.64.1",
+    "broker_ip_v6":"10.105.112"
+}

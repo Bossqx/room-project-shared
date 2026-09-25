@@ -1,0 +1,46 @@
+2026-08-25 13:40:27,880 [INFO] schedule_service: Fetching current bookings from http://localhost:8000/schedule_AP/get_booking_at_current_time/
+2026-08-25 13:40:30,041 [INFO] schedule_service: Fetched 6 booking(s)
+2026-08-25 13:40:30,042 [INFO] apscheduler.scheduler: Scheduler started
+2026-08-25 13:40:30,043 [INFO] schedule_service: Booking 9223 (room 27.03.03) start time 2026-08-25T12:50:00+07:00 already passed (now 2026-08-25T13:40:30.043527+07:00) - running immediately
+2026-08-25 13:40:30,043 [INFO] schedule_service: START booking=9223 room=27.03.03 course=416103 (หลักการเทคโนโลยีดิจิทัลมีเดีย) teacher=ดร. สิริกร กรมโพธิ์ time=12:50-16:10
+2026-08-25 13:40:33,131 [INFO] schedule_service: Sent access-token command for booking 9223 (room 27.03.03): {'success': True, 'host': '10.27.127.25', 'topic': 'AP-TOPIC/27.03.03', 'results': [{'rowId': '9223', 'token': 'NDE2MTAzXzI3LjAzLjAzXzNfMTI6NTBfMTY6MTBfMjU2OV8xXzIwMjYtMDgtMjVfc2lyaWtvcm4uaw==', 'source_type': 'schedule', 'sent': True}], 'errors': []}
+2026-08-25 13:40:33,132 [INFO] schedule_service: Booking 9261 (room 27.03.05) start time 2026-08-25T12:50:00+07:00 already passed (now 2026-08-25T13:40:30.043527+07:00) - running immediately
+2026-08-25 13:40:33,132 [INFO] schedule_service: START booking=9261 room=27.03.05 course=401185 (การประยุกต์ใช้โปรแกรมคอมพิวเตอร์สำหรับนักฟิสิกส์) teacher=นาย ไพโรจน์ ใจเดี่ยว time=12:50-16:10
+2026-08-25 13:40:36,207 [INFO] schedule_service: Sent access-token command for booking 9261 (room 27.03.05): {'success': True, 'host': '10.27.127.25', 'topic': 'AP-TOPIC/27.03.05', 'results': [{'rowId': '9261', 'token': 'NDAxMTg1XzI3LjAzLjA1XzNfMTI6NTBfMTY6MTBfMjU2OV8xXzIwMjYtMDgtMjVfcGFpcm90ZS5q', 'source_type': 'schedule', 'sent': True}], 'errors': []}
+2026-08-25 13:40:36,207 [INFO] schedule_service: Booking 9279 (room 27.03.06) start time 2026-08-25T12:50:00+07:00 already passed (now 2026-08-25T13:40:30.043527+07:00) - running immediately
+2026-08-25 13:40:36,207 [INFO] schedule_service: START booking=9279 room=27.03.06 course=501112 (การเขียนโปรแกรมคอมพิวเตอร์) teacher=ผศ.ดร. กนกพร บุญจูบุตร time=12:50-16:10
+2026-08-25 13:40:39,272 [INFO] schedule_service: Sent access-token command for booking 9279 (room 27.03.06): {'success': True, 'host': '10.27.127.25', 'topic': 'AP-TOPIC/27.03.06', 'results': [{'rowId': '9279', 'token': 'NTAxMTEyXzI3LjAzLjA2XzNfMTI6NTBfMTY6MTBfMjU2OV8xXzIwMjYtMDgtMjVfa2Fub2twb3JuLmI=', 'source_type': 'schedule', 'sent': True}], 'errors': []}
+2026-08-25 13:40:39,273 [INFO] schedule_service: Booking 9294 (room 27.03.07) start time 2026-08-25T12:50:00+07:00 already passed (now 2026-08-25T13:40:30.043527+07:00) - running immediately
+2026-08-25 13:40:39,273 [INFO] schedule_service: START booking=9294 room=27.03.07 course=411301 (ระบบฐานข้อมูล) teacher=ผศ.ดร. ทิพยา ถินสูงเนิน time=12:50-16:10
+2026-08-25 13:40:42,363 [INFO] schedule_service: Sent access-token command for booking 9294 (room 27.03.07): {'success': True, 'host': '10.27.127.25', 'topic': 'AP-TOPIC/27.03.07', 'results': [{'rowId': '9294', 'token': 'NDExMzAxXzI3LjAzLjA3XzNfMTI6NTBfMTY6MTBfMjU2OV8xXzIwMjYtMDgtMjVfdGlwcGF5YS50', 'source_type': 'schedule', 'sent': True}], 'errors': []}
+2026-08-25 13:40:42,364 [INFO] schedule_service: Booking 9307 (room 27.03.08) start time 2026-08-25T12:50:00+07:00 already passed (now 2026-08-25T13:40:30.043527+07:00) - running immediately
+2026-08-25 13:40:42,364 [INFO] schedule_service: START booking=9307 room=27.03.08 course=306271 (การวิเคราะห์ข้อมูลทางธุรกิจด้วยเทคโนโลยีสารสนเทศและปัญญาประดิษฐ์) teacher=ผศ. ธีรศักดิ์ สังข์ศรี time=12:50-16:10
+2026-08-25 13:40:45,438 [INFO] schedule_service: Sent access-token command for booking 9307 (room 27.03.08): {'success': True, 'host': '10.27.127.25', 'topic': 'AP-TOPIC/27.03.08', 'results': [{'rowId': '9307', 'token': 'MzA2MjcxXzI3LjAzLjA4XzNfMTI6NTBfMTY6MTBfMjU2OV8xXzIwMjYtMDgtMjVfdGVlcmFzYWsucw==', 'source_type': 'schedule', 'sent': True}], 'errors': []}
+2026-08-25 13:40:45,438 [INFO] schedule_service: Booking 9320 (room 27.03.09) start time 2026-08-25T12:50:00+07:00 already passed (now 2026-08-25T13:40:30.043527+07:00) - running immediately
+2026-08-25 13:40:45,438 [INFO] schedule_service: START booking=9320 room=27.03.09 course=324308 (เทคโนโลยีสารสนเทศและนวัตกรรมเทคโนโลยีในอุตสาหกรรมบริการ) teacher=ดร. อภิรดี เนติรังษีวัชรา time=12:50-16:10
+2026-08-25 13:40:48,542 [INFO] schedule_service: Sent access-token command for booking 9320 (room 27.03.09): {'success': True, 'host': '10.27.127.25', 'topic': 'AP-TOPIC/27.03.09', 'results': [{'rowId': '9320', 'token': 'MzI0MzA4XzI3LjAzLjA5XzNfMTI6NTBfMTY6MTBfMjU2OV8xXzIwMjYtMDgtMjVfYXBpcmFkZWUubg==', 'source_type': 'schedule', 'sent': True}], 'errors': []}
+2026-08-25 13:40:48,543 [INFO] apscheduler.scheduler: Added job "refresh_bookings" to job store "default"
+2026-08-25 13:40:48,543 [INFO] schedule_service: Scheduler running with 1 job(s) queued. Press Ctrl+C to exit.
+2026-08-25 13:43:42,978 [INFO] schedule_service: Received signal 2, shutting down scheduler...
+2026-08-25 13:43:42,978 [INFO] apscheduler.scheduler: Scheduler has been shut down
+2026-08-27 16:10:41,500 [INFO] schedule_service: Fetching current bookings from http://localhost:8000/schedule_AP/get_booking_at_current_time/
+2026-08-27 16:10:43,668 [INFO] schedule_service: Fetched 7 booking(s)
+2026-08-27 16:10:43,671 [INFO] apscheduler.scheduler: Scheduler started
+2026-08-27 16:10:43,672 [INFO] schedule_service: Booking 9227 (room 27.03.03) start time 2026-08-27T12:50:00+07:00 already passed (now 2026-08-27T16:10:43.671997+07:00) - running immediately
+2026-08-27 16:10:43,672 [INFO] schedule_service: START booking=9227 room=27.03.03 course=306271 (การวิเคราะห์ข้อมูลทางธุรกิจด้วยเทคโนโลยีสารสนเทศและปัญญาประดิษฐ์) teacher=ดร. เมธี ทองดี time=12:50-16:10
+2026-08-27 16:10:56,268 [INFO] schedule_service: Fetching current bookings from http://localhost:8000/schedule_AP/get_booking_at_current_time/
+2026-08-27 16:10:58,439 [INFO] schedule_service: Fetched 7 booking(s)
+2026-08-27 16:10:58,441 [INFO] apscheduler.scheduler: Scheduler started
+2026-08-27 16:10:58,442 [INFO] schedule_service: Booking 9227 (room 27.03.03) start time 2026-08-27T12:50:00+07:00 already passed (now 2026-08-27T16:10:58.442802+07:00) - running immediately
+2026-08-27 16:10:58,442 [INFO] schedule_service: START booking=9227 room=27.03.03 course=306271 (การวิเคราะห์ข้อมูลทางธุรกิจด้วยเทคโนโลยีสารสนเทศและปัญญาประดิษฐ์) teacher=ดร. เมธี ทองดี time=12:50-16:10
+2026-08-27 16:11:10,883 [INFO] schedule_service: Fetching current bookings from http://localhost:8000/schedule_AP/get_booking_at_current_time/
+2026-08-27 16:11:13,045 [INFO] schedule_service: Fetched 0 booking(s)
+2026-08-27 16:11:13,047 [INFO] apscheduler.scheduler: Scheduler started
+2026-08-27 16:11:13,048 [INFO] apscheduler.scheduler: Added job "refresh_bookings" to job store "default"
+2026-08-27 16:11:13,048 [INFO] schedule_service: Scheduler running with 1 job(s) queued. Press Ctrl+C to exit.
+2026-08-27 16:11:46,267 [INFO] apscheduler.scheduler: Scheduler started
+2026-08-27 16:11:46,269 [INFO] apscheduler.scheduler: Added job "run_booking_task" to job store "default"
+2026-08-27 16:11:46,269 [INFO] schedule_service: Scheduled booking 99999 (room TEST.ROOM) start task to run at 2026-08-27T16:16:00+07:00
+2026-08-27 16:11:46,269 [INFO] apscheduler.scheduler: Added job "run_booking_finish_task" to job store "default"
+2026-08-27 16:11:46,269 [INFO] schedule_service: Scheduled booking 99999 (room TEST.ROOM) finish task to run at 2026-08-27T16:21:00+07:00
+2026-08-27 16:11:46,270 [INFO] apscheduler.scheduler: Scheduler has been shut down

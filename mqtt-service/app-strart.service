@@ -1,0 +1,19 @@
+[Unit]
+Description=Chromium Kiosk
+After=graphical.target network-online.target
+Wants=network-online.target
+
+[Service]
+User=cjiamram
+Environment=DISPLAY=:0
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+ExecStartPre=/bin/sleep 5
+ExecStart=/usr/bin/chromium-browser --kiosk --noerrdialogs --disable-infobars \
+  --no-first-run --disable-session-crashed-bubble --disable-translate \
+  --check-for-update-interval=31536000 --start-fullscreen \
+  --app=https://cosai.nrru.ac.th/room-manager/qr-front?room=27.03.04
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical.target

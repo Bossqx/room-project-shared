@@ -1,0 +1,5 @@
+{
+  "api_base": "https://cosai.nrru.ac.th:8000",
+  "timezone": "Asia/Bangkok",
+  "request_timeout_seconds": 10
+}

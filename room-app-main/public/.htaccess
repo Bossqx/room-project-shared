@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Handle requests for static assets
+  RewriteRule ^(js|css|img|fonts|static)/(.*)$ /$1/$2 [L,NC]
+
+  ErrorDocument 404 /404.html
+  ErrorDocument 500 /404.html
+
+  # Handle requests for the root directory
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+</IfModule>
+

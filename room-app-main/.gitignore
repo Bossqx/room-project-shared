@@ -1,0 +1,11 @@
+# Node
+node_modules/
+dist/
+
+# Config with secrets
+config.json
+*.local.json
+
+# OS/editor
+.DS_Store
+.vscode/

@@ -1,0 +1,18 @@
+[Unit]
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=cjiamram
+Group=cjiamram
+WorkingDirectory=/opt/mqtt_sub
+ExecStart=/usr/bin/python3 /opt/mqtt_sub/device_listener_arg.py --device door
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=device_%i
+
+[Install]
+WantedBy=multi-user.target

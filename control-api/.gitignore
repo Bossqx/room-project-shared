@@ -1,0 +1,91 @@
+# =================================
+# API Keys & Secrets (สำคัญมาก!)
+# =================================
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.staging
+*.pem
+*.key
+secrets/
+config/secrets.*
+
+# =================================
+# Python
+# =================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+*.egg
+.mypy_cache/
+.ruff_cache/
+
+# =================================
+# Node.js
+# =================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm
+.yarn/cache
+.pnp.*
+
+# =================================
+# Vue.js / Vite
+# =================================
+dist/
+dist-ssr/
+*.local
+.vite/
+.nuxt/
+.output/
+
+# =================================
+# Docker
+# =================================
+.docker/
+docker-compose.override.yml
+
+# =================================
+# IDE & Editor
+# =================================
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# =================================
+# Logs
+# =================================
+logs/
+*.log
+*.log.*
+
+# =================================
+# Database
+# =================================
+*.sqlite
+*.sqlite3
+*.db
+dump.sql

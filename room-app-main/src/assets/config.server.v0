@@ -1,0 +1,24 @@
+{
+
+
+  "mqtt": {
+    "protocol": "wss",
+    "host": "cosai.nrru.ac.th",
+    "port": 443,
+    "path": "/mqtt-ws/",
+    "username": "...",
+    "password": "...",
+    "reconnectPeriod": 4000,
+    "connectTimeout": 10000
+  },
+  "topics": [
+    "device/+/command",
+    "send_message/qr",
+    "update_schedule",
+    "toggle_popup/popup"
+  ],
+  "bookingUrl": "https://cosai.nrru.ac.th/room-manager/",
+  "staffAccessUrl": "https://cosai.nrru.ac.th/room-manager/staff-access/",
+  "prefixUrl": "https://cosai.nrru.ac.th/room-manager/confirm/",
+  "apiRoute":"https://cosai.nrru.ac.th:8000/"
+}

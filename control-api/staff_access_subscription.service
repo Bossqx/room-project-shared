@@ -1,0 +1,15 @@
+[Unit]
+Description=Staff Access MQTT Subscriber
+After=network.target mosquitto.service
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/control-api
+ExecStart=/var/www/control-api/apienv/bin/python staff_access_subscription.py
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

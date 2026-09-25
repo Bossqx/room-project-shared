@@ -1,0 +1,17 @@
+[Unit]
+Description=Check Usage Room Flag MQTT Subscriber
+After=network.target mosquitto.service
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/control-api
+ExecStart=/var/www/control-api/api-env/bin/python subject_replace_subscript.py
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+Environment=MQTT_BROKER_HOST=127.0.0.1
+Environment=MQTT_BROKER_PORT=1883
+
+[Install]
+WantedBy=multi-user.target
