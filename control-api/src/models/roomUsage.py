@@ -65,8 +65,26 @@ class RoomUsage_Controller():
         result = db.set_specific_sql(sql, (usage_status,usage_status,id))
         del db
         return result
-        
-        
+    
+    def get_schedule_wait_aprove(self):
+        db=DB()
+        sql=f"""SELECT 
+                id,
+                room_no,
+                `subject_code`,
+                `objective`,
+                `user_name`,
+                booking_date,
+                `start_time`,
+                finish_time 
+        FROM room_usages WHERE 
+        `objective`<>'MIS Schedule' 
+        AND `usage_status`=1
+        """
+        results=db.get_specific_sql(sql)
+        del db 
+        return results                 
+                
 
     def set_status_close_booking(self, id:int):
         db = DB()

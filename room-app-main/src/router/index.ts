@@ -28,6 +28,7 @@ const ScheduleInfo = () => import("../views/ScheduleInfo.vue");
 const InformationMobile = () => import("../views/InformationMobile.vue");
 const RoomAdmin = () => import("../views/RoomAdmin.vue");
 const AdminCancelRoom = () => import("../views/AdminCancelRoom.vue");
+const AproveUsage = () => import("../views/AproveUsage.vue");
 const DashboardTestLayout = () => import("../layouts/DashboardTestLayout.vue");
 const DashboardTest = () => import("../views/DashboardTest.vue");
 const DashboardTest2 = () => import("../views/DashboardTest2.vue");
@@ -190,6 +191,11 @@ const router = createRouter({
           path: "/admin/cancel-room",
           name: "/admin/cancel-room",
           component: AdminCancelRoom,
+        },
+        {
+          path: "/admin/approve-usage",
+          name: "/admin/approve-usage",
+          component: AproveUsage,
         },
       ],
     },

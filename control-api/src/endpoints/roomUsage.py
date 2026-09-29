@@ -12,6 +12,14 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
+@router.get("/get_schedule_wait_aprove/")
+async def get_schedule_wait_aprove():
+    ctrl =RoomUsage_Controller()
+    results=ctrl.get_schedule_wait_aprove()
+    return results 
+
+
+
 @router.get("/set_status_booking/{id}")
 async def set_status_booking(id: int,usage_status:int):
     ctrl = RoomUsage_Controller()
