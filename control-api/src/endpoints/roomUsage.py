@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, BackgroundTasks
 from fastapi import  HTTPException
 from src.models.roomUsage import RoomUsage_Base, RoomUsage_Controller,Confirm_Status_Booking_Base,Confirm_Status_Controller
 from src.models.schedule import Schedule_Controller
+from src.util.telegram_notifier import send_booking_notification, telegram_is_configured
 from datetime import datetime, date
 import uuid as uuid_lib
 from PIL import Image
@@ -99,17 +100,27 @@ async def generate_uuid(subject_code: str, user_code: str):
     return {"uuid": result}
 
 @router.post("/add")
-async def add_room_usage(room_usage: RoomUsage_Base):
+async def add_room_usage(room_usage: RoomUsage_Base, background_tasks: BackgroundTasks):
     db = RoomUsage_Controller()
-    result = db.add(room_usage.dict())
+    booking = room_usage.dict()
+    result = db.add(booking)
     if not result:
         raise HTTPException(status_code=400, detail="Failed to add room usage")
+
+    # A conflict response is truthy but no booking was created.
+    if isinstance(result, dict) and result.get("error"):
+        return result
 
     try:
         db1=Schedule_Controller()
         db1.migrate_schedule_2_json()
     except Exception:
         pass  # keep the booking even if refreshing the JSON snapshot fails
+
+    # Telegram is an optional side effect. A notification failure must never
+    # roll back or delay a successful booking.
+    if telegram_is_configured():
+        background_tasks.add_task(send_booking_notification, booking)
 
     return result
 

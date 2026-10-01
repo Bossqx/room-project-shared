@@ -58,7 +58,12 @@ onMounted(async () => {
   try {
     const res  = await fetch(`${apiBase}/room-usage/get_rooms`)
     const data = await res.json()
-    rooms.value = (Array.isArray(data) ? data : []).map((r: { room_no: string }) => r.room_no)
+    rooms.value = (Array.isArray(data) ? data : [])
+      .map((r: { room_no: string }) => r.room_no.trim())
+      .filter(Boolean)
+      .sort((left: string, right: string) =>
+        left.localeCompare(right, undefined, { numeric: true, sensitivity: 'base' }),
+      )
     if (rooms.value.length) form.value.room_no = rooms.value[0]
   } catch { /* ignore */ }
 

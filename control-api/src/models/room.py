@@ -87,6 +87,22 @@ class Room_Controller():
         result = db.set_specific_sql(sql, params)
         del db
         return result
+
+    def get_panorama(self, room_no):
+        db = DB()
+        sql = "SELECT panorama FROM rooms WHERE room_no=%s"
+        params = (room_no,)
+        results = db.get_specific_sql(sql, None, params)
+        del db
+        return results[0] if results else None
+
+    def clear_panorama(self, room_no):
+        db = DB(self.__tableName__)
+        sql = "UPDATE rooms SET panorama=NULL WHERE room_no=%s"
+        params = (room_no,)
+        result = db.set_specific_sql(sql, params)
+        del db
+        return result
     
     def get_list_application_usage(self,room_no:str):
             db=DB()
@@ -194,6 +210,22 @@ class Room_Image_Controller():
     def delete(self, id):
         db = DB(self.__tableName__)
         result = db.delete(id)
+        del db
+        return result
+
+    def get_by_image(self, image):
+        db = DB()
+        sql = "SELECT room_no, image FROM room_images WHERE image=%s"
+        params = (image,)
+        results = db.get_specific_sql(sql, None, params)
+        del db
+        return results[0] if results else None
+
+    def delete_by_image(self, image):
+        db = DB(self.__tableName__)
+        sql = "DELETE FROM room_images WHERE image=%s"
+        params = (image,)
+        result = db.set_specific_sql(sql, params)
         del db
         return result
     

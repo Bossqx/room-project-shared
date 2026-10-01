@@ -7,7 +7,7 @@ import ThemeToggle from '../views/components/ThemeToggle.vue'
 import LanguageToggle from '../views/components/LanguageToggle.vue'
 import BookingDesktop from '../views/components/BookingDesktop.vue'
 
-const logo = '/icons/icon-192.svg'
+const logo = '/icons/logo.png'
 
 const router    = useRouter()
 const route     = useRoute()
@@ -201,8 +201,7 @@ function logout() {
 .top-logo {
   width: 24px;
   height: 24px;
-  border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
   flex-shrink: 0;
 }
 

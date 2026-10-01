@@ -1,5 +1,6 @@
 import os
 import uuid
+from pathlib import Path
 from fastapi import APIRouter, File, UploadFile
 from fastapi import  HTTPException
 from fastapi.responses import FileResponse
@@ -16,6 +17,19 @@ os.makedirs(PANO_UPLOAD_DIR, exist_ok=True)
 
 ROOM_IMAGES_DIR = "ROOM_IMAGES"
 os.makedirs(ROOM_IMAGES_DIR, exist_ok=True)
+
+
+def _safe_upload_path(upload_dir: str, relative_path: str) -> Path:
+    """Resolve an uploaded file path without allowing access outside its directory."""
+    root = Path(upload_dir).resolve()
+    candidate = (root / relative_path).resolve()
+    try:
+        candidate.relative_to(root)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid image path")
+    if candidate == root:
+        raise HTTPException(status_code=400, detail="Invalid image path")
+    return candidate
 
 
 @router.post("/add")
@@ -88,6 +102,65 @@ async def get_panorama(room_no: str):
         raise HTTPException(status_code=404, detail="Panorama file not found")
 
     return FileResponse(path=file_path)
+
+
+@router.delete("/delete_image/{image_path:path}")
+async def delete_room_image(image_path: str):
+    db = Room_Image_Controller()
+    image = db.get_by_image(image_path)
+    if not image:
+        raise HTTPException(status_code=404, detail="Room image not found")
+
+    file_path = _safe_upload_path(ROOM_IMAGES_DIR, image_path)
+    try:
+        if file_path.is_file():
+            file_path.unlink()
+    except OSError as exc:
+        raise HTTPException(status_code=500, detail=f"Failed to delete image file: {exc}")
+
+    result = db.delete_by_image(image_path)
+    if not result or not result.get("Flag"):
+        raise HTTPException(status_code=500, detail="Failed to delete image record")
+
+    # Remove the now-empty room directory, but never fail the request for it.
+    try:
+        file_path.parent.rmdir()
+    except OSError:
+        pass
+
+    return {
+        "message": "Room image deleted successfully",
+        "image": image_path,
+    }
+
+
+@router.delete("/delete_panorama/{room_no}")
+async def delete_panorama(room_no: str):
+    db = Room_Controller()
+    room = db.get_panorama(room_no)
+    if not room:
+        raise HTTPException(status_code=404, detail="Room not found")
+
+    panorama = room.get("panorama")
+    if not panorama:
+        raise HTTPException(status_code=404, detail="Panorama not found")
+
+    file_path = _safe_upload_path(PANO_UPLOAD_DIR, panorama)
+    try:
+        if file_path.is_file():
+            file_path.unlink()
+    except OSError as exc:
+        raise HTTPException(status_code=500, detail=f"Failed to delete panorama file: {exc}")
+
+    result = db.clear_panorama(room_no)
+    if not result or not result.get("Flag"):
+        raise HTTPException(status_code=500, detail="Failed to clear panorama record")
+
+    return {
+        "message": "Panorama deleted successfully",
+        "room_no": room_no,
+        "panorama": panorama,
+    }
 
 @router.post("/upload_panorama/{room_no}")
 async def upload_panorama(room_no: str, file: UploadFile = File(...)):
