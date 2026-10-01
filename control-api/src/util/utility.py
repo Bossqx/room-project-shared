@@ -2,7 +2,6 @@ from email.message import EmailMessage
 from datetime import datetime, timedelta
 import os
 from typing import Dict, Any
-from sentence_transformers import SentenceTransformer
 from io import BytesIO
 from PIL import Image
 from pathlib import Path
@@ -168,6 +167,11 @@ class Util():
         return chunks
 
     def get_embeding(contents,models='BAAI/bge-m3'):
+        # This dependency is large and only needed for embedding operations.
+        # Import it lazily so the room-management API can start without loading
+        # an ML model at application startup.
+        from sentence_transformers import SentenceTransformer
+
         model = SentenceTransformer(models)
         embeddings = model.encode(contents).tolist()
         del model

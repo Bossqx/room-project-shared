@@ -8,7 +8,7 @@ import ChangePinDesktop from '../views/components/ChangePinDesktop.vue'
 import ThemeToggle from '../views/components/ThemeToggle.vue'
 import LanguageToggle from '../views/components/LanguageToggle.vue'
 
-const logo = '/icons/icon-192.svg'
+const logo = '/icons/logo.png'
 
 const router    = useRouter()
 const route     = useRoute()
@@ -233,8 +233,7 @@ defineExpose({ showBooking })
 .brand-logo {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
   flex-shrink: 0;
 }
 

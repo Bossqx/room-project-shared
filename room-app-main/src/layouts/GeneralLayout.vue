@@ -7,7 +7,7 @@ import BookingDesktop from '../views/components/BookingDesktop.vue'
 import { useUserStore } from '../stores/user'
 import { locale } from '../i18n'
 
-const logo = '/icons/icon-192.svg'
+const logo = '/icons/logo.png'
 
 const router = useRouter()
 const route = useRoute()
@@ -179,8 +179,7 @@ function handleAuthAction() {
 .brand-logo {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
+  object-fit: contain;
   flex-shrink: 0;
 }
 

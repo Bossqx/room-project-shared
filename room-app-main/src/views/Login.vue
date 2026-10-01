@@ -6,7 +6,7 @@ import { useSemesterStore } from '../stores/semester'
 import config from "../assets/config.json"
 import LanguageToggle from './components/LanguageToggle.vue'
 
-const logo = '/icons/icon-192.svg'
+const logo = '/icons/logo.png'
 
 const router         = useRouter()
 const userStore      = useUserStore()
@@ -34,16 +34,23 @@ async function loginSystem() {
 
 async function syncNRRUUser(o: any, pwd: string) {
   try {
-    const check = await fetch(`${apiBase}/user/is_exist/${encodeURIComponent(o.username)}`).then(r => r.json())
+    const userName = o.username ?? o.user_name
+    if (!userName) return
+
+    const displayName = o.fullname ?? o.name ?? buildName(o)
+    const description = o.departmentname
+      ?? [o.department_code1, o.department_code2].filter(Boolean).join(' / ')
+
+    const check = await fetch(`${apiBase}/user/is_exist/${encodeURIComponent(userName)}`).then(r => r.json())
     if (!check.exists) {
       await fetch(`${apiBase}/user/add/`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user_name:    o.username,
-          name:         buildName(o),
+          user_name:    userName,
+          name:         displayName,
           password:     pwd,
-          description:  o.departmentname ?? '',
+          description,
           picture:      o.picture        ?? '',
           user_type:    'user',
           created_date: new Date().toISOString(),
@@ -54,18 +61,27 @@ async function syncNRRUUser(o: any, pwd: string) {
 }
 
 async function loginNRRU() {
-  const url  = `https://cos.nrru.ac.th/NRRUCredential/NRRUCredential1.php?userName=${encodeURIComponent(username.value)}&password=${encodeURIComponent(password.value)}`
-  const data = await fetch(url).then(r => r.json())
-  if (!Array.isArray(data) || !data[0] || data[0].status <= 0) return null
-  const o = data[0]
-  await syncNRRUUser(o, password.value)
+  const res = await fetch(`${apiBase}/user/get_cos_credentials/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      user_name: username.value,
+      password: password.value,
+    }),
+  })
+  if (!res.ok) throw new Error(`MIS authentication failed with HTTP ${res.status}`)
+
+  const data = await res.json()
+  if (!data?.username) return null
+
+  await syncNRRUUser(data, password.value)
   return {
-    id:          parseInt(o.staffid)   || 0,
-    user_name:   o.username            ?? username.value,
-    name:        buildName(o),
-    picture:     o.picture             ?? '',
-    description: o.departmentname      ?? '',
-    user_type:   String(o.usertype     ?? ''),
+    id:          0,
+    user_name:   data.username ?? username.value,
+    name:        data.fullname ?? '',
+    picture:     data.picture ?? '',
+    description: [data.department_code1, data.department_code2].filter(Boolean).join(' / '),
+    user_type:   String(data.user_type ?? ''),
   }
 }
 
@@ -151,7 +167,7 @@ function acknowledgePinPopup() {
           <img :src="logo" alt="ตราสัญลักษณ์ระบบบริหารจัดการห้อง" class="brand-logo" />
         </div>
         <div>
-          <p class="brand-name">ระบบบริหารจัดการห้อง</p>
+          <p class="brand-name">เข้าสู่ระบบด้วยบัญชี MIS</p>
           <p class="brand-sub">มหาวิทยาลัยราชภัฏนครราชสีมา</p>
         </div>
       </div>
@@ -159,8 +175,6 @@ function acknowledgePinPopup() {
       <div class="divider"></div>
 
       <!-- Form -->
-      <p class="form-title">เข้าสู่ระบบบัญชีของคุณ</p>
-
       <div class="field">
         <label class="lbl">ชื่อผู้ใช้</label>
         <div class="input-wrap">
@@ -299,26 +313,18 @@ function acknowledgePinPopup() {
 .brand-icon {
   width: 44px;
   height: 44px;
-  background: var(--bg-surface);
-  border-radius: 0.75rem;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  overflow: hidden;
+  overflow: visible;
 }
-.brand-logo { width: 100%; height: 100%; object-fit: cover; }
-.brand-name { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1.2; }
-.brand-sub  { font-size: 0.65rem; color: #64748b; margin: 0; line-height: 1.4; }
+.brand-logo { width: 100%; height: 100%; object-fit: contain; }
+.brand-name { font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1.2; }
+.brand-sub  { font-size: 0.75rem; color: #64748b; margin: 0; line-height: 1.4; }
 
 .divider { height: 1px; background: #334155; margin: 0 -0.25rem; }
-
-.form-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin: 0;
-}
 
 /* Fields */
 .field { display: flex; flex-direction: column; gap: 0.4rem; }

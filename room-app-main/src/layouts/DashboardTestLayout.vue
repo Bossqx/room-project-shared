@@ -208,11 +208,7 @@ function handleAuthAction() {
   height: 2rem;
   flex: 0 0 auto;
   box-sizing: border-box;
-  padding: 0.15rem;
-  border-radius: 50%;
   object-fit: contain;
-  background: var(--brand-on-primary);
-  box-shadow: 0 1px 4px rgb(0 0 0 / 0.18);
 }
 
 .brand-title {

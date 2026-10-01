@@ -84,15 +84,33 @@ onUnmounted(() => { if (clockTimer) clearInterval(clockTimer) })
 onMounted(async () => {
   tickClock()
   clockTimer = setInterval(tickClock, 60_000)
-  try {
-    const res  = await fetch(`${apiBase}/schedule/get_list_current_rooms/`)
+  const loadRoomCodes = async (url: string, field: 'roomCode' | 'room_no') => {
+    const res = await fetch(url)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data = await res.json()
-    rooms.value = (Array.isArray(data) ? data : []).map((r: { roomCode: string }) => r.roomCode)
-    if (rooms.value.length) {
-      roomCode.value = rooms.value[0]
-      runSearch()
-    }
-  } catch { /* rooms stay empty */ }
+    return (Array.isArray(data) ? data : [])
+      .map((item: Record<string, unknown>) => String(item[field] ?? '').trim())
+      .filter(Boolean)
+  }
+
+  const [scheduledRooms, registeredRooms] = await Promise.allSettled([
+    loadRoomCodes(`${apiBase}/schedule/get_list_current_rooms/`, 'roomCode'),
+    loadRoomCodes(`${apiBase}/room/get_all_rooms`, 'room_no'),
+  ])
+
+  const roomCodes = [
+    ...(scheduledRooms.status === 'fulfilled' ? scheduledRooms.value : []),
+    ...(registeredRooms.status === 'fulfilled' ? registeredRooms.value : []),
+  ]
+
+  rooms.value = [...new Set(roomCodes)].sort((left, right) =>
+    left.localeCompare(right, undefined, { numeric: true, sensitivity: 'base' }),
+  )
+
+  if (rooms.value.length) {
+    roomCode.value = rooms.value[0]
+    runSearch()
+  }
 })
 
 async function search() {
@@ -374,7 +392,7 @@ async function confirmCancel(item: ScheduleItem | ScheduleItemDB) {
   background: var(--bg-page);
   color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  padding: 11rem 1% 1.25rem;
+  padding: 1.25rem 1%;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;

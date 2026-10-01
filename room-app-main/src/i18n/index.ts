@@ -23,6 +23,7 @@ const translations: Array<readonly [thai: string, english: string]> = [
   ['ระบบบริหารจัดการห้องคอมพิวเตอร์', 'Computer Room Management System'],
   ['ระบบบริหารจัดการห้อง © มหาวิทยาลัยราชภัฏนครราชสีมา', 'Room Management System © Nakhon Ratchasima Rajabhat University'],
   ['ระบบบริหารจัดการห้อง', 'Room Management System'],
+  ['เข้าสู่ระบบด้วยบัญชี MIS', 'Sign in with your MIS account'],
   ['ระบบจองห้องคอมพิวเตอร์', 'Computer Room Booking System'],
   ['มหาวิทยาลัยราชภัฏนครราชสีมา', 'Nakhon Ratchasima Rajabhat University'],
   ['ตราสัญลักษณ์ระบบบริหารจัดการห้องคอมพิวเตอร์', 'Computer room management system logo'],

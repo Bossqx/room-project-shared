@@ -24,16 +24,45 @@ const listErrMsg = ref('')
 
 const pageSize    = 10
 const currentPage = ref(1)
+const searchQuery = ref('')
+const roomFilter  = ref('')
+const dateFilter  = ref('')
 
-const totalPages = computed(() => Math.max(1, Math.ceil(rows.value.length / pageSize)))
+const roomOptions = computed(() => [...new Set(rows.value.map(row => row.room_no).filter(Boolean))]
+  .sort((left, right) => left.localeCompare(right, 'th', { numeric: true })))
+
+const filteredRows = computed(() => {
+  const query = searchQuery.value.trim().toLocaleLowerCase()
+
+  return rows.value.filter((row) => {
+    const matchesQuery = !query || [
+      row.id,
+      row.room_no,
+      row.user_name,
+      row.subject_code,
+      row.objective,
+    ].some(value => String(value ?? '').toLocaleLowerCase().includes(query))
+    const matchesRoom = !roomFilter.value || row.room_no === roomFilter.value
+    const matchesDate = !dateFilter.value || formatDate(row.booking_date) === dateFilter.value
+
+    return matchesQuery && matchesRoom && matchesDate
+  })
+})
+
+const hasActiveFilters = computed(() => Boolean(searchQuery.value || roomFilter.value || dateFilter.value))
+const totalPages = computed(() => Math.max(1, Math.ceil(filteredRows.value.length / pageSize)))
 const pagedRows  = computed(() => {
   const start = (currentPage.value - 1) * pageSize
-  return rows.value.slice(start, start + pageSize)
+  return filteredRows.value.slice(start, start + pageSize)
 })
 
 // Keep the page in range as rows are approved/cancelled.
 watch(totalPages, (max) => {
   if (currentPage.value > max) currentPage.value = max
+})
+
+watch([searchQuery, roomFilter, dateFilter], () => {
+  currentPage.value = 1
 })
 
 function goToPage(page: number) {
@@ -42,6 +71,12 @@ function goToPage(page: number) {
 
 function formatDate(iso: string) {
   return iso ? iso.slice(0, 10) : ''
+}
+
+function clearFilters() {
+  searchQuery.value = ''
+  roomFilter.value = ''
+  dateFilter.value = ''
 }
 
 async function load() {
@@ -97,6 +132,35 @@ onMounted(load)
 
       <div v-if="listState === 'error'" class="msg error-box">{{ listErrMsg }}</div>
 
+      <div class="filters" role="search" aria-label="Filter bookings waiting for approval">
+        <label class="filter-field filter-search">
+          <span>Search</span>
+          <input
+            v-model="searchQuery"
+            type="search"
+            placeholder="ID, user, subject or objective"
+            autocomplete="off"
+          />
+        </label>
+
+        <label class="filter-field">
+          <span>Room</span>
+          <select v-model="roomFilter">
+            <option value="">All rooms</option>
+            <option v-for="room in roomOptions" :key="room" :value="room">{{ room }}</option>
+          </select>
+        </label>
+
+        <label class="filter-field">
+          <span>Date</span>
+          <input v-model="dateFilter" type="date" />
+        </label>
+
+        <button type="button" class="btn-clear" :disabled="!hasActiveFilters" @click="clearFilters">
+          Clear filters
+        </button>
+      </div>
+
       <table class="table">
         <thead>
           <tr>
@@ -112,8 +176,10 @@ onMounted(load)
           </tr>
         </thead>
         <tbody>
-          <tr v-if="rows.length === 0 && listState !== 'loading'">
-            <td colspan="9" class="empty">No bookings waiting for approval.</td>
+          <tr v-if="filteredRows.length === 0 && listState !== 'loading'">
+            <td colspan="9" class="empty">
+              {{ rows.length === 0 ? 'No bookings waiting for approval.' : 'No bookings match the selected filters.' }}
+            </td>
           </tr>
           <tr v-for="item in pagedRows" :key="item.id">
             <td class="mono">{{ item.id }}</td>
@@ -146,7 +212,7 @@ onMounted(load)
         </tbody>
       </table>
 
-      <div v-if="rows.length > 0" class="pagination">
+      <div v-if="filteredRows.length > 0" class="pagination">
         <button
           type="button"
           class="btn-page"
@@ -155,7 +221,10 @@ onMounted(load)
         >
           ‹ Prev
         </button>
-        <span class="page-info">Page {{ currentPage }} of {{ totalPages }} ({{ rows.length }} total)</span>
+        <span class="page-info">
+          Page {{ currentPage }} of {{ totalPages }}
+          ({{ filteredRows.length }}<template v-if="hasActiveFilters"> of {{ rows.length }}</template> total)
+        </span>
         <button
           type="button"
           class="btn-page"
@@ -206,6 +275,71 @@ onMounted(load)
   color: var(--accent-link-hover);
   margin: 0;
 }
+
+.filters {
+  display: grid;
+  grid-template-columns: minmax(16rem, 2fr) minmax(9rem, 0.8fr) minmax(10rem, 0.9fr) auto;
+  align-items: end;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+  padding: 0.8rem;
+  border-radius: 0.65rem;
+  background: var(--bg-page);
+}
+
+.filter-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.32rem;
+}
+
+.filter-field > span {
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.filter-field input,
+.filter-field select {
+  width: 100%;
+  min-height: 2.35rem;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.82rem;
+  padding: 0.45rem 0.65rem;
+}
+
+.filter-field input:focus-visible,
+.filter-field select:focus-visible,
+.btn-clear:focus-visible {
+  border-color: var(--accent-link);
+  outline: 2px solid color-mix(in srgb, var(--accent-link) 25%, transparent);
+  outline-offset: 1px;
+}
+
+.btn-clear {
+  min-height: 2.35rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 650;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-clear:hover:not(:disabled) { background: var(--bg-surface-alt); }
+.btn-clear:disabled { opacity: 0.45; cursor: not-allowed; }
 
 .btn-approve {
   background: rgba(34,197,94,.12);
@@ -301,4 +435,18 @@ onMounted(load)
 }
 .btn-page:hover:not(:disabled) { background: var(--bg-surface-alt); }
 .btn-page:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media (max-width: 900px) {
+  .filters { grid-template-columns: minmax(0, 1fr) minmax(8rem, 0.55fr); }
+  .filter-search { grid-column: 1 / -1; }
+}
+
+@media (max-width: 560px) {
+  .page { padding-inline: 0.5rem; }
+  .card { width: 100%; padding: 0.85rem; }
+  .filters { grid-template-columns: minmax(0, 1fr); }
+  .filter-search { grid-column: auto; }
+  .btn-clear { width: 100%; }
+  .pagination { gap: 0.5rem; }
+}
 </style>
